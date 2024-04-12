@@ -439,9 +439,9 @@
                                 </li>-->
                             
                                             <li>
-                                <a href="./Help and Support.html" class="ttr-material-button">
+                                <a href="./Manage Users.html" class="ttr-material-button">
                                         <span class="ttr-icon"><i class="ti-stats-up"></i></span>
-                                        <span class="ttr-label"><b>Help and Support</b></span>
+                                        <span class="ttr-label"><b>Manage Users</b></span>
                                     </a>
                             </li>
                         </ul>
@@ -471,7 +471,7 @@
                             }
                             #box {
                                 width: 1000px;
-                                height: 600px;
+                                height: 500px;
                                 background-color: #f0f0f0;
                                 border: 1px solid #ccc;
                                 border-radius: 10px;
@@ -541,8 +541,7 @@
                                             </div>
                                         </div>
                                         <div id="box">
-                                            <h2 id="title">Lie Detection Recordings</h2>
-                                            <p>Video record or cam</p>
+                                            
                                             <div class="video-container">
                                                 <video id="videoElement" autoplay controls></video>
                                             </div>
@@ -554,6 +553,65 @@
                         <div class="controls">
                             <button class="btn" id="startRecording">Start Recording</button>
                             <button class="btn" id="stopRecording">Stop Recording</button>
+                            <button class="btn" data-toggle="modal" data-target="#approve-55">
+                                Add User Details
+                            </button>
+                            <section>
+                               
+                            <div id="approve-55" class="modal fade" role="dialog">
+                                <form class="edit-profile m-b30" method="POST" enctype="multipart/form-data">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title"><img src="../assets/images/icon.png" style="width: 30px; height: 30px;">&nbsp;User Details</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="approve-id" value="55">
+                                                <div class="row">
+                                                    <div class="form-group col-4">
+                                                        <label class="col-form-label">Full Name</label>
+                                                        <input class="form-control" type="text" value="Ruel  Acejo" readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="col-form-label">Email</label>
+                                                        <input class="form-control" name="aapprove-email" type="text" value="cuentomarco2020@gmail.com" readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-4">
+                                                        <label class="col-form-label">Interaction Date </label>
+                                                        <input class="form-control" type="text" value="Feb. 13, 2024" readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label class="col-form-label">Time</label>
+                                                        <input class="form-control" name="approve-email" type="text" value="10 AM" readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label class="col-form-label">Address</label>
+                                                        <input class="form-control" name="approve-email" type="text" value="Purok Daisy Brgy. Antikin " readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label class="col-form-label">Code</label>
+                                                        <input class="form-control" name="approve-email" type="text" value="741471" readonly style="background-color: white;">
+                                                    </div>
+                                                    <div class="form-group col-6">
+                                                        <label class="col-form-label">Results</label>
+                                                        <select class="form-control" id="lieDetectionResults">
+                                                            <option value="positive">Positive</option>
+                                                            <option value="negative">Negative</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn Orange outline radius-xl" data-dismiss="modal">Begin test</button>
+                                                <button type="button" class="btn green outline radius-xl" data-dismiss="modal">Reset Form</button>
+                                                <button type="button" class="btn red outline radius-xl" data-dismiss="modal">Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            </section>
                             <h2 id="title">Select duration</h2>
                             <select id="recordingDuration">
                                 <option value="30">30 seconds</option>
