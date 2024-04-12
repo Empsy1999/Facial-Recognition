@@ -461,188 +461,195 @@
                         </div>
                         
                     </div>
-                    <div><style>
-                        #container {
-                          display: flex;
-                          justify-content: space-between;
-                          align-items: flex-start; /* Align items to the top */
-                          padding: 20px;
-                        }
-                    
-                        #box {
-                          width: 1000px; /* Adjust width as needed */
-                          height: 600px; /* Adjust height as needed */
-                          background-color: #f0f0f0;
-                          border: 1px solid #ccc;
-                          border-radius: 10px;
-                          padding: 20px;
-                          box-sizing: border-box;
-                        }
-                    
-                        #title {
-                          font-size: 18px;
-                          font-weight: bold;
-                          margin-bottom: 10px;
-                        }
-                    
-                        #emotion-list {
-                          list-style: none;
-                          padding: 0;
-                          margin-top: 20px; /* Add margin to the top */
-                        }
-                    
-                        #emotion-list li {
-                          margin-bottom: 5px;
-                        }
-                      </style>
+                    <div>
+                        <style>
+                            #container {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: flex-start;
+                                padding: 20px;
+                            }
+                            #box {
+                                width: 1000px;
+                                height: 600px;
+                                background-color: #f0f0f0;
+                                border: 1px solid #ccc;
+                                border-radius: 10px;
+                                padding: 20px;
+                                box-sizing: border-box;
+                            }
+                            #title {
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-bottom: 10px;
+                            }
+                            #emotion-list {
+                                list-style: none;
+                                padding: 0;
+                                margin-top: 20px;
+                            }
+                            #emotion-list li {
+                                margin-bottom: 5px;
+                            }
+                            .video-container {
+                                position: relative;
+                                width: 100%;
+                                height: auto;
+                            }
+                            video {
+                                width: 100%;
+                                height: auto;
+                            }
+                            .controls {
+                                margin-top: 20px;
+                            }
+                            .btn {
+                                display: inline-block;
+                                padding: 10px 20px;
+                                background-color: #007bff;
+                                color: #fff;
+                                border: none;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                transition: background-color 0.3s;
+                            }
+                            .btn:hover {
+                                background-color: #0056b3;
+                            }
+                        </style>
                     </head>
                     <body>
-                      <div id="container">
-                        <div>
-                          <h2 id="title">Emotion Unit</h2>
-                          <ul id="emotion-list">
-                            <li>Happy</li>
-                            <li>Angry</li>
-                            <li>Disgust</li>
-                            <li>Fear</li>
-                            <li>Sad</li>
-                            <li>Neutral</li>
-                            <li>Surprise</li>
-                          </ul>
+                        <div class="container-fluid">
+                            <div class="col-lg-12 m-b30">
+                                <br>
+                                <div class="row">
+                                    <div id="container">
+                                        <div>
+                                            <h2 id="title">Emotion Unit</h2>
+                                            <ul id="emotion-list">
+                                                <li>Happy</li>
+                                                <li>Angry</li>
+                                                <li>Disgust</li>
+                                                <li>Fear</li>
+                                                <li>Sad</li>
+                                                <li>Neutral</li>
+                                                <li>Surprise</li>
+                                            </ul>
+                                            <div id="emotionOverlay">
+                                                <div id="truthPercentage">Truth: 70%</div>
+                                                <div id="deceitPercentage">Deceit: 30%</div>
+                                            </div>
+                                        </div>
+                                        <div id="box">
+                                            <h2 id="title">Lie Detection Recordings</h2>
+                                            <p>Video record or cam</p>
+                                            <div class="video-container">
+                                                <video id="videoElement" autoplay controls></video>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="box">
-                          <h2 id="title">Lie Detection Recordings</h2>
-                          <p>Video record or cam</p>
+                        <div class="controls">
+                            <button class="btn" id="startRecording">Start Recording</button>
+                            <button class="btn" id="stopRecording">Stop Recording</button>
+                            <h2 id="title">Select duration</h2>
+                            <select id="recordingDuration">
+                                <option value="30">30 seconds</option>
+                                <option value="60">1 minute</option>
+                                <option value="120">2 minutes</option>
+                            </select>
+                            <h2 id="title">Select format</h2>
+                            <select id="fileFormat">
+                                <option value="mp4">MP4</option>
+                                <option value="webm">WebM</option>
+                            </select>
+                            <h2 id="title">Enable Face Labeling:</h2>
+                            <input type="checkbox" id="toggleLabeling">
+                            <progress id="lieDetectionIndicator" value="0" max="100"></progress>
+                            <div id="analysisResults"></div>
+                            <button class="btn" id="exportResults">Export Results</button>
+                            <select id="exportFormat">
+                                <option value="pdf">PDF</option>
+                                <option value="csv">CSV</option>
+                                <option value="mp4">MP4</option>
+                                <option value="webm">WebM</option>
+                            </select>
                         </div>
-                      </div>
+                        <script>
+                            const videoElement = document.getElementById('videoElement');
+    const startRecordingBtn = document.getElementById('startRecording');
+    const stopRecordingBtn = document.getElementById('stopRecording');
+    const recordingDurationSelect = document.getElementById('recordingDuration');
+    const fileFormatSelect = document.getElementById('fileFormat');
+    const toggleRecognition = document.getElementById('toggleRecognition');
+    const toggleLabeling = document.getElementById('toggleLabeling');
+    const analysisMode = document.getElementById('analysisMode');
+    const emotionOverlay = document.getElementById('emotionOverlay');
+    const lieDetectionIndicator = document.getElementById('lieDetectionIndicator');
+    const analysisResults = document.getElementById('analysisResults');
+    const exportResults = document.getElementById('exportResults');
+    const exportFormat = document.getElementById('exportFormat');
+
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    toggleRecognition.addEventListener('click', () => {
+        // Implement start/stop recognition logic
+    });
+
+    toggleLabeling.addEventListener('change', () => {
+        // Implement enable/disable face labeling logic
+    });
+
+    analysisMode.addEventListener('change', () => {
+        // Implement analysis mode switch logic
+    });
+
+    exportResults.addEventListener('click', () => {
+        const selectedFormat = exportFormat.value;
+        // Implement export results logic based on selected format
+    });
+
+    startRecordingBtn.addEventListener('click', () => {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                videoElement.srcObject = stream;
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.ondataavailable = (e) => {
+                    recordedChunks.push(e.data);
+                };
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/' + fileFormatSelect.value });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'recorded_video.' + fileFormatSelect.value;
+                    a.click();
+                    recordedChunks = [];
+                };
+                mediaRecorder.start();
+            })
+            .catch(err => console.error('Error accessing media devices: ', err));
+    });
+
+    stopRecordingBtn.addEventListener('click', () => {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+        }
+    });
+                        </script>
                     </body></div>
                     
                         
                     </div>
-                    <div class="container">
-                        <div class="section">
-                            <h2>Key Metrics</h2>
-                            <div id="metrics">
-                                <p>Average Stress Level: <span id="avgStressLevel"></span></p>
-                                <p>Accuracy Rate: <span id="accuracyRate"></span></p>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         
             <!-- Lie Detection Sessions -->
-            <div>
-                <section>
-                    <div class="container">
-                        <h1>Lie Detection Sessions</h1>
-                        
-                        <!-- Start New Session Button -->
-                        <button id="startSessionBtn" class="btn-primary">Start New Session</button>
-                        
-                        <!-- Session History -->
-                        <div id="sessionHistory">
-                            <h2>Session History</h2>
-                            <ul id="sessionList"></ul>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        
-        <style>
-            .container {
-                max-width: 800px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-        
-            .btn-primary {
-                background-color: #007bff;
-                color: #fff;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
-        
-            #sessionHistory {
-                margin-top: 20px;
-            }
-        
-            #sessionHistory h2 {
-                margin-bottom: 10px;
-            }
-        
-            #sessionList {
-                list-style: none;
-                padding: 0;
-            }
-        
-            .session-item {
-                margin-bottom: 10px;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-        
-            .session-item:hover {
-                background-color: #f0f0f0;
-            }
-        </style>
-        
-        <script>
-            const sessionHistory = [
-                { id: 1, date: '2024-02-15', time: '10:00 AM', participants: ['John', 'Alice'], result: 'Positive' },
-                { id: 2, date: '2024-02-14', time: '11:30 AM', participants: ['Alice', 'Bob'], result: 'Negative' },
-                // Add more sessions as needed
-            ];
-        
-            // Function to render session history
-            function renderSessionHistory() {
-                const sessionList = document.getElementById('sessionList');
-                sessionList.innerHTML = '';
-        
-                sessionHistory.forEach(session => {
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('session-item');
-                    listItem.textContent = `${session.date} - ${session.time} | Participants: ${session.participants.join(', ')} | Result: ${session.result}`;
-        
-                    // Open detailed session information on click
-                    listItem.addEventListener('click', () => {
-                        openSessionDetails(session);
-                    });
-        
-                    sessionList.appendChild(listItem);
-                });
-            }
-        
-            // Function to open session details modal
-            function openSessionDetails(session) {
-                // Mock modal content
-                alert(`Session ID: ${session.id}\nDate: ${session.date}\nTime: ${session.time}\nParticipants: ${session.participants.join(', ')}\nResult: ${session.result}`);
-            }
-        
-            // Event listener for start session button
-            document.getElementById('startSessionBtn').addEventListener('click', () => {
-                // Placeholder for starting a new session
-                alert('Starting a new session...');
-            });
-        
-            // Render session history on page load
-            renderSessionHistory();
-        </script>
-        
-        </div>
-        </div>
-        
-        </div>
-        </div>
+           
     </main>
     <div class="ttr-overlay"></div>
 
