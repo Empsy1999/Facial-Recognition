@@ -316,7 +316,7 @@
                                         </li>
                                     </a>
                                     <hr>
-                                    <a href="../index.html" style="text-decoration: none;color: black;">
+                                    <a href="./Login.html" style="text-decoration: none;color: black;">
                                         <li>
                                             <span class="notification-icon dashbg-red">
 											<i class="fa fa-sign-out" style="font-size: 18px;"></i>
@@ -470,14 +470,14 @@
                                 padding: 20px;
                             }
                             #box {
-                                width: 1000px;
-                                height: 500px;
-                                background-color: #f0f0f0;
-                                border: 1px solid #ccc;
-                                border-radius: 10px;
-                                padding: 20px;
-                                box-sizing: border-box;
-                            }
+                            width: 720px; /* Adjust the width as needed */
+                            height: 640px; /* Adjust the height as needed */
+                            background-color: #f0f0f0;
+                            border: 1px solid #ccc;
+                            border-radius: 10px;
+                            padding: 20px;
+                            box-sizing: border-box;
+                        }
                             #title {
                                 font-size: 18px;
                                 font-weight: bold;
@@ -492,14 +492,14 @@
                                 margin-bottom: 5px;
                             }
                             .video-container {
-                                position: relative;
-                                width: 100%;
-                                height: auto;
-                            }
-                            video {
-                                width: 100%;
-                                height: auto;
-                            }
+                            position: relative;
+                            width: 100%;
+                            height: 100%; /* Adjust height to fit the box */
+                        }
+                        video {
+                            width: 100%;
+                            height: 100%; /* Adjust height to fit the box */
+                        }
                             .controls {
                                 margin-top: 20px;
                             }
@@ -540,16 +540,18 @@
                                                 <div id="deceitPercentage"><b>Deceit:</b> 30%</div>
                                             </div>
                                             <div id="emotionOverlay">
-                                                <div id="Avg_bpms:"><b>Average bpms:</b><br>73(4)</div>
-                                                <div id="Mood:"><b>Action Unit:</b><br>Hand Covering</div>
-                                                <div id="Mood:"><b>Action Unit:</b><br>Lip Biting</div>
+                                                <div id="truthPercentage"><b>average bpms:</b> 73%</div>
+                                                <div id="deceitPercentage"><b>Action Unit:</b> Handcovering</div>
+                                                <div id="deceitPercentage"><b>Action Unit:</b> Lip Biting</div>
                                             </div>
+
+                                            <div id="responseMessage"></div>
+                                            
                                         </div>
                                         <div id="box">
-                                            
                                             <div class="video-container">
-                                                <video id="videoElement" autoplay controls></video>
-                                                
+                                                <video id="videoElement" autoplay></video>
+                                                <canvas id="canvas" style="display:none;"></canvas>
                                             </div>
                                         </div>
                                     </div>
@@ -557,11 +559,111 @@
                             </div>
                         </div>
                         <div class="controls">
-                            <button class="btn" id="startRecording">Start Recording</button>
-                            <button class="btn" id="stopRecording">Stop Recording</button>
+                           
+                            <section>
+                                
+                            <button class="btn" id="startButton">Start Recording</button>
+                            <button class="btn" id="stopButton">Stop Recording</button>
                             <button class="btn" data-toggle="modal" data-target="#approve-55">
                                 Add User Details
                             </button>
+                            <script>
+                                const video = document.getElementById('videoElement');
+                                const canvas = document.getElementById('canvas');
+                                const context = canvas.getContext('2d');
+                                const startButton = document.getElementById('startButton');
+                                const stopButton = document.getElementById('stopButton');
+                                const responseMessage = document.getElementById('responseMessage');
+                                let captureInterval;
+                                let ws;
+                            
+                                // Get user media
+                                navigator.mediaDevices.getUserMedia({ video: true })
+                                    .then(stream => {
+                                        video.srcObject = stream;
+                                    })
+                                    .catch(err => {
+                                        console.error('Error accessing webcam:', err);
+                                    });
+                            
+                                // Start capturing frames continuously
+                                startButton.addEventListener('click', () => {
+                                    captureInterval = setInterval(() => {
+                                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                        const imageData = canvas.toDataURL('image/png');
+                                        sendData(imageData);
+                                    }, 100); // Capture every 1 second
+                                });
+                            
+                                // Stop capturing frames
+                                stopButton.addEventListener('click', () => {
+                                    clearInterval(captureInterval);
+                                });
+                            
+                                // Send data to FastAPI
+                                function sendData(imageData) {
+                                    fetch('http://0.0.0.0:8000/save_frame', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ frame: imageData })
+                                    })
+                                    .then(response => response.json()) // Parse response as JSON
+                                    .then(data => {
+                                        // Display response message on the web app
+                                        responseMessage.innerHTML = ''; // Clear previous content
+                                        for (const [key, value] of Object.entries(data)) {
+                                            const p = document.createElement('p');
+                                            p.textContent = `${key}: ${value.text}`;
+                                            responseMessage.appendChild(p);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error sending frame:', error);
+                                        responseMessage.textContent = 'Error sending frame: ' + error.message;
+                                    })
+                                    .then(() => {
+                                        console.log('Frame sent successfully');
+                                    })
+                                    .catch(error => {
+                                        console.error('Error sending frame:', error);
+                                    });
+                                }
+                            
+                                // Establish WebSocket connection
+                                ws = new WebSocket('ws://0.0.0.0:8000/save_frame');
+                            
+                                // Function to handle messages received from WebSocket
+                                ws.onmessage = function(event) {
+                                    // Parse the message received from the server
+                                    const data = JSON.parse(event.data);
+                            
+                                    // Check if the data contains an error
+                                    if (!data.error) {
+                                        responseMessage.innerHTML = ''; // Clear previous content
+                                        for (const [key, value] of Object.entries(data)) {
+                                            const p = document.createElement('p');
+                                            p.textContent = `${key}: ${value.text}`;  // Use `value` directly
+                                            responseMessage.appendChild(p);
+                                        }
+                                    }
+                                };
+                            
+                                // Function to handle errors in WebSocket connection
+                                ws.onerror = function(error) {
+                                    console.error('WebSocket error:', error);
+                                    responseMessage.textContent = 'WebSocket error: ' + error.message;
+                                };
+                            
+                                // Function to handle WebSocket connection close
+                                ws.onclose = function(event) {
+                                    console.log('WebSocket connection closed:', event);
+                                };
+                            
+                            </script>
+                            </section>
+                            
                             <section>
                                
                             <div id="approve-55" class="modal fade" role="dialog">

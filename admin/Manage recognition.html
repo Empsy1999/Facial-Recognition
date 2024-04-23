@@ -317,7 +317,7 @@
                                         </li>
                                     </a>
                                     <hr>
-                                    <a href="../index.html" style="text-decoration: none;color: black;">
+                                    <a href="./Login.html" style="text-decoration: none;color: black;">
                                         <li>
                                             <span class="notification-icon dashbg-red">
 											<i class="fa fa-sign-out" style="font-size: 18px;"></i>
@@ -572,15 +572,50 @@
         </main>
     
         <script>
+            // Listen for the custom event triggered by the second page
+            document.addEventListener('reportUploaded', function () {
+                // Update UI or perform any action to handle the uploaded report
+                // For example, enable the download button
+                const downloadButton = document.getElementById('downloadButton');
+                downloadButton.disabled = false;
+            });
+        
+            // JavaScript for sending report request
             function processReport(button) {
-                // Replace button content with loading animation
-                button.innerHTML = '<span class="loading"></span>Processing...';
-    
-                // Simulate loading process (you can replace this with actual API call or process)
+                localStorage.setItem('reportRequested', 'true');
+                localStorage.setItem('messageText', 'Report requested for Vice.');
+                let currentRequests = parseInt(localStorage.getItem('reportRequests')) || 0;
+                currentRequests++;
+                localStorage.setItem('reportRequests', currentRequests);
+                button.innerHTML = '<span class="loading"></span> Processing...';
                 setTimeout(function() {
-                    // Change button content after loading process completes
-                    button.innerHTML = 'Download Report';
+                    button.parentNode.innerHTML = '<button id="downloadButton" onclick="downloadReport()">Download Report</button>'; // Change button to Download
+                    const reportAvailable = localStorage.getItem('reportAvailable');
+                    if (reportAvailable === 'true') {
+                        const downloadButton = document.getElementById('downloadButton');
+                        downloadButton.disabled = false;
+                    }
                 }, 3000); // Change 3000 to the duration of your loading process in milliseconds
+            }
+        
+            function downloadReport() {
+                // Check if the report is available
+                const reportAvailable = localStorage.getItem('reportAvailable');
+                if (reportAvailable === 'true') {
+                    // Generate download link for the report
+                    const reportData = localStorage.getItem('reportData');
+                    const blob = new Blob([reportData], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    // Create a link element and trigger download
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'report.html';
+                    a.click();
+                    // Revoke the URL to release resources
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert('Report not available.');
+                }
             }
         </script>
     </body>

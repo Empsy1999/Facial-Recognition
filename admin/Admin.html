@@ -274,21 +274,21 @@
 <body class="ttr-opened-sidebar ttr-pinned-sidebar" style="background-color: #FBFBFB;">
 
     <header class="ttr-header">
-        <div class="ttr-header-wrapper">
-            <div class="ttr-toggle-sidebar ttr-material-button">
-                <i class="ti-close ttr-open-icon"></i>
-                <i class="ti-menu ttr-close-icon"></i>
+    <div class="ttr-header-wrapper">
+        <div class="ttr-toggle-sidebar ttr-material-button">
+            <i class="ti-close ttr-open-icon"></i>
+            <i class="ti-menu ttr-close-icon"></i>
+        </div>
+        <div class="ttr-logo-box">
+            <div>
+                <a href="./Dashboard.html" class="ttr-logo">
+                    <img alt="" class="ttr-logo-mobile" src="../assets/images/logo-white.png" style="width: 200px; height: 36px;">
+                    <img alt="" class="ttr-logo-desktop" src="../assets/images/logo-white.png" style="width: 200px; height: 36px;">
+                </a>
             </div>
-            <div class="ttr-logo-box">
-                <div>
-                    <a href="./Dashboard.html" class="ttr-logo">
-					    <img alt="" class="ttr-logo-mobile" src="../assets/images/logo-white.png" style="width: 200px; height: 36px;">
-						<img alt="" class="ttr-logo-desktop" src="../assets/images/logo-white.png" style="width: 200px; height: 36px;">
-					</a>
-                </div>
-            </div>
-            <div class="ttr-header-menu">
-            </div>
+        </div>
+        <div class="ttr-header-menu"></div>
+            
             <div class="ttr-header-right ttr-with-seperator">
                 <ul class="ttr-header-navigation">
 
@@ -302,6 +302,7 @@
                             <div class="noti-box-list">
                                 <ul>
                                     
+
                                     
                                     <hr>
                                     <a href="./Dashboard.html" style="text-decoration: none;color: black;">
@@ -333,6 +334,7 @@
                 </ul>
             </div>
         </div>
+        
     </header>
     <div class="ttr-sidebar">
         <div class="ttr-sidebar-wrapper content-scroll">
@@ -422,10 +424,10 @@
 							</a>
                             </li>
                             <li style="margin-top: 0px;">
-                                <a href="./Manage recognition.html" class="ttr-material-button">
-								<span class="ttr-icon"><i class="ti-home"></i></span>
-								<span class="ttr-label"><b>Manage Recognition</b></span>
-							</a>
+                                <a>
+                                    <span class="ttr-icon"><i class="ti-user"></i></span>
+                                    <span class="ttr-label"><b>Manage Recognition</b></span>
+                                </a>
                             </li>
                             
                             
@@ -439,7 +441,7 @@
                                 </li>-->
                             
                                             <li>
-                                <a >
+                                <a href="./Manage Users.html" class="ttr-material-button">
                                         <span class="ttr-icon"><i class="ti-stats-up"></i></span>
                                         <span class="ttr-label"><b>Manage Users</b></span>
                                     </a>
@@ -450,231 +452,309 @@
             </div>
         </div>
     </div>
-    <main class="ttr-wrapper" style="background-color: #FBFBFB;">
-        <div class="row">
-            <div class="col-lg-12 m-b30">
-                <br>
-                <div class="heading-bx left">
-                    <h2 class="m-b10 title-head">Manage <span>Users</span></h2>
+    
+    <section>
+        <body>
+            <style>
+                .notification-bell {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+}
+
+.notification-popup {
+    display: none;
+    position: absolute;
+    top: 35px;
+    left: -140px;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.notification-bell:hover .notification-popup {
+    display: block;
+}
+
+.notification-popup p {
+    margin: 0;
+    padding: 5px;
+}
+            </style>
+            <div class="notification-bell">
+                <i class="fa fa-bell"></i>
+                <div class="notification-popup">
+                    <p id="notificationText">Process report for user</p>
                 </div>
-                <form method="POST">
-                    <div class="row">
-                        <div class="col-lg-2"></div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="date" class="form-control" max="2023-03-06" name="deyt" id="deyt" value="" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <input type="date" class="form-control" max="2023-03-06" name="deytend" id="deytend" value="" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <button type="submit" name="searchData" class="btn brown"><i class="ti-search" style="font-size: 12px;"></i></button>
-                        </div>
-                        <div class="col-lg-2"></div>
-                    </div>
-                </form>
-                <center>
-                    <h4 style="color: #151B54"></h4>
-                </center>
-                <div class="table-responsive">
-                    <table id="table" class="table table-bordered hover" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th width="5">Action</th>
-                                <th>Fullname</th>
-                                <th>Date & Time</th>
-                                <th>Results</th>
-                                <th>Ref. Code</th>
-                                <!--<th>Amount Charged</th>
-												<th>Amount Paid</th>-->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <center>
-                                        <button data-toggle="modal" data-target="#approve-55" class="btn brown" style="width: 50px; height: 37px;">
-															<div data-toggle="tooltip" title="View Details">
-																<i class="ti-search" style="font-size: 12px;"></i>
-															</div>
-														</button>
-                                    </center>
-                                </td>
-                                <td><a href="./Help and Support.html" style="color: black;">Ruel  Acejo</a></td>
-                                <td>March. 13 2024 - 1:21-1:40 PM</td>
-                                <td>Positive</td>
-                                <td>741471</td>
-                                <!--<td><span class="charged">₱ 0</span></td>
-												<td><span class="paid">₱ 0</span></td>-->
-                            </tr>
-
-
-
-                            <div id="approve-55" class="modal fade" role="dialog">
-                                <form class="edit-profile m-b30" method="POST" enctype="multipart/form-data">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><img src="../assets/images/icon.png" style="width: 30px; height: 30px;">&nbsp;User Details</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="hidden" name="approve-id" value="55">
-                                                <div class="row">
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Full Name</label>
-                                                        <input class="form-control" type="text" value="Ruel  Acejo" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Email</label>
-                                                        <input class="form-control" name="aapprove-email" type="text" value="cuentomarco2020@gmail.com" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Interaction Date</label>
-                                                        <input class="form-control" type="text" value="Feb. 13, 2024" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Time</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="10:00 AM" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Address</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="Purok Daisy Brgy. Antikin " readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Code</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="741471" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Result </label>
-                                                        <input class="form-control" type="text" value="Positive" readonly style="background-color: white;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="./Help and Support.html" class="btn green outline radius-xl">Save</a>
-                                                <button type="button" class="btn red outline radius-xl" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <tr>
-                                <td>
-                                    <center>
-                                        <button data-toggle="modal" data-target="#approve-66" class="btn brown" style="width: 50px; height: 37px;">
-															<div data-toggle="tooltip" title="View Details">
-																<i class="ti-search" style="font-size: 12px;"></i>
-															</div>
-														</button>
-                                    </center>
-                                </td>
-                                <td><a href="./Help and Support.html" style="color: black;">Marco  Cuento</a></td>
-                                <td>March. 12 2024 - 11:01-11:20 AM</td>
-                                <td> Negative</td>
-                                <td>781037</td>
-                                <!--<td><span class="charged">₱ 0</span></td>
-												<td><span class="paid">₱ 0</span></td>-->
-                            </tr>
-
-
-
-                           
-
-
-
-
-
-
-                            
-
-
-
-                            <div id="approve-37" class="modal fade" role="dialog">
-                                <form class="edit-profile m-b30" method="POST" enctype="multipart/form-data">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title"><img src="../assets/images/icon.png" style="width: 30px; height: 30px;">&nbsp;Appointment Details</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <input type="hidden" name="approve-id" value="37">
-                                                <div class="row">
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Full Name</label>
-                                                        <input class="form-control" type="text" value="Juan  Dela Cruz" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Email</label>
-                                                        <input class="form-control" name="aapprove-email" type="text" value="cuentomarco2020@gmail.com" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-4">
-                                                        <label class="col-form-label">Date & Time</label>
-                                                        <input class="form-control" type="text" value="Dec. 17 - 4:41-5:00 PM" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Result</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="Positive" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Address</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="Infanta, Quezon" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Code</label>
-                                                        <input class="form-control" name="approve-email" type="text" value="826490" readonly style="background-color: white;">
-                                                    </div>
-                                                    <div class="form-group col-6">
-                                                        <label class="col-form-label">Date Sent</label>
-                                                        <input class="form-control" type="text" value="Dec. 17, 2022 4:36 PM" readonly style="background-color: white;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="procedure-details?id=37" class="btn green outline radius-xl">Procedure Details</a>
-                                                <button type="button" class="btn red outline radius-xl" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </tbody>
-                    </table>
-                </div>
-                <form method="POST" target="_blank">
-                    <div align="right">
-                        <hr>
-                        <!--<h4 id="total-charged"></h4>
-										<h4 id="total-price"></h4>-->
-                        <input type="hidden" name="print_date" value="">
-                        <input type="hidden" name="print_dateend" value="">
-                        <button type="submit" name="print_treatment" class="btn primary radius-xl">Print</button>
-                    </div>
-
-                </form>
-
             </div>
-        </div>
-        </div>
-    </main>
-    <div class="ttr-overlay"></div>
+            <script></script>
+        </body>
+    </section>
+    
+    <body>
+        
+        
+        <style>
+            /* CSS for notification bell */
+            .notification-bell {
+                position: relative;
+                display: inline-block;
+                margin-right: 20px;
+            }
+    
+            .notification-bell .notification-popup {
+                display: none;
+                position: absolute;
+                top: 25px;
+                right: 0;
+                width: 200px;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                padding: 10px;
+            }
+    
+            .notification-bell:hover .notification-popup {
+                display: block;
+            }
+    
+            .notification-bell i {
+                font-size: 24px;
+                cursor: pointer;
+            }
+    
+            /* Original CSS */
+            #profile-table-facial-recognition {
+                width: 100%;
+                border-collapse: collapse;
+            }
+    
+            #profile-table-facial-recognition th,
+            #profile-table-facial-recognition td {
+                padding: 8px;
+                text-align: left;
+                border: 1px solid #ddd;
+            }
+    
+            #profile-table-facial-recognition th {
+                background-color: #f2f2f2;
+            }
+    
+            #profile-table-facial-recognition tbody tr:hover {
+                background-color: #f5f5f5;
+            }
+    
+            .actions {
+                display: flex;
+                gap: 10px;
+            }
+    
+            .action-buttons button {
+                padding: 5px 10px;
+                cursor: pointer;
+                background-color: #4caf50;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+    
+            .action-buttons button:hover {
+                background-color: #45a049;
+            }
+        </style>
+    
+        <main class="ttr-wrapper">
+            <div class="container-fluid">
+                <div class="col-lg-12 m-b30">
+                    <br>
+                    
+                    <div class="row">
+                        
+                        <div class="col-lg-6 m-b30">
+                            
+                            <div class="heading-bx left">
+                                <h2 class="m-b10 title-head">Manage Recognition <span></span></h2> 
+                                <section><style>
+                                    body {
+                                      margin: 0;
+                                      padding: 0;
+                                      overflow: hidden;
+                                      position: relative;
+                                    }
+                                    #floating-window {
+                                      display: none;
+                                      position: absolute;
+                                      top: 50%;
+                                      left: 144%;
+                                      transform: translate(-50%, -50%);
+                                      width: 300px;
+                                      height: 200px;
+                                      background-color: #fff;
+                                      border: 1px solid #ccc;
+                                      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                                      z-index: 9999;
+                                      padding: 20px;
+                                    }
+                                    #floating-window .close-btn {
+                                      position: absolute;
+                                      top: 5px;
+                                      right: 5px;
+                                      cursor: pointer;
+                                    }
+                                    #floating-window .content {
+                                      height: calc(100% - 30px);
+                                      overflow: auto;
+                                    }
+                                    #open-btn {
+                                      position: fixed;
+                                      top: 80px;
+                                      right: 20px;
+                                      z-index: 9999;
+                                      cursor: pointer;
+                                      background-color: #007bff;
+                                      color: #fff;
+                                      padding: 10px 20px;
+                                      border: none;
+                                      border-radius: 5px;
+                                      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                                    }
+                                  </style>
+                                  </head>
+                                  <body>
+                                    
+                                    <button id="open-btn">Report Requested</button>
+                                    <span id="notification-badge" class="notification" style="display:none;"></span>
+                                    
+                                    <div id="floating-window">
+                                        <div class="close-btn" onclick="closeFloatingWindow()">X</div>
+                                        <div class="content">
+                                            <!-- Message text will be displayed here -->
+                                        </div>
+                                    </div>
+                                  
+                                    <script>
+                                        const openBtn = document.getElementById('open-btn');
+                                        const floatingWindow = document.getElementById('floating-window');
+                                        const notificationBadge = document.getElementById('notification-badge');
+                                    
+                                        openBtn.addEventListener('click', () => {
+                                            floatingWindow.style.display = 'block';
+                                            notificationBadge.style.display = 'none'; // Hide the notification badge when button is clicked
+                                        });
+                                    
+                                        const reportRequested = localStorage.getItem('reportRequested');
+                                        if (reportRequested === 'true') {
+                                            notificationBadge.style.display = 'block'; // Show the notification badge if report is requested
+                                            const messageText = localStorage.getItem('messageText');
+                                            const contentDiv = floatingWindow.querySelector('.content');
+                                            contentDiv.textContent = messageText;
+                                        }
+                                    
+                                        const reportRequests = parseInt(localStorage.getItem('reportRequests')) || 0;
+                                        if (reportRequests > 0) {
+                                            notificationBadge.textContent = reportRequests;
+                                            notificationBadge.style.display = 'block';
+                                        }
+                                    
+                                        function closeFloatingWindow() {
+                                            floatingWindow.style.display = 'none';
+                                        }
+                                    </script>
+                                  
+                                  </body></section>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <section>
+                        <div class="container">
+                            <table id="profile-table-facial-recognition">
+                                <thead>
+                                    <tr>
+                                        <th>User ID</th>
+                                        <th>User Name</th>
+                                        <th>Lie Detected</th>
+                                        <th>Confidence Score</th>
+                                        <th>Interaction Date</th>
+                                        <th>Location</th>
+                                        <th>Video</th>
+                                        <th>Report</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td contenteditable="false">001</td>
+                                        <td contenteditable="false">John Doe</td>
+                                        <td contenteditable="false">Positive</td>
+                                        <td contenteditable="false">70%</td>
+                                        <td contenteditable="false">April 10, 2024</td>
+                                        <td contenteditable="false">Office</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button onclick="fetchReport(1)">Download Video</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <input type="file" id="reportFileInput" style="display: none;" accept=".html">
+                                                <button onclick="uploadReport(this)">Upload Report</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button onclick="deleteProfileFacialRecognition(1)">Delete</button> <!-- Delete button -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    
+        <script>
+            let reportSent = false; // Variable to track upload status
 
-    <script src="../dashboard/assets/js/jquery.min.js"></script>
-    <script type="text/javascript">
-        $('#deyt').change(function() {
-            var date = $(this).val();
-            $("#deytend").attr("min", date);
+function uploadReport(button) {
+    if (!reportSent) { // Check if report has already been sent
+        const fileInput = document.getElementById('reportFileInput');
+        fileInput.click();
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files[0];
+            if (file) {
+                button.textContent = 'Sending Report...';
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const reportData = event.target.result;
+                    localStorage.setItem('reportData', reportData);
+                    localStorage.setItem('reportAvailable', 'true');
+                    setTimeout(function () {
+                        button.textContent = 'Successfully Sent';
+                        reportSent = true; // Set reportSent to true after successful upload
+                        // Trigger custom event to notify the first page
+                        document.dispatchEvent(new Event('reportUploaded'));
+                    }, 3000); // Change back after 3 seconds (example)
+                };
+                reader.readAsText(file);
+            }
         });
-    </script>
-    </main>
+    }
+}
+        </script>
+    </body>
+    
+    
     <div class="ttr-overlay"></div>
 
     <script src="../dashboard/assets/js/jquery.min.js"></script>
