@@ -316,7 +316,7 @@
                                         </li>
                                     </a>
                                     <hr>
-                                    <a href="./Login.html" style="text-decoration: none;color: black;">
+                                    <a href="../Login.html" style="text-decoration: none;color: black;">
                                         <li>
                                             <span class="notification-icon dashbg-red">
 											<i class="fa fa-sign-out" style="font-size: 18px;"></i>
@@ -470,32 +470,39 @@
                                 padding: 20px;
                             }
                             #box {
-                            width: 720px; /* Adjust the width as needed */
-                            height: 640px; /* Adjust the height as needed */
-                            background-color: #f0f0f0;
-                            border: 1px solid #ccc;
-                            border-radius: 10px;
-                            padding: 20px;
-                            box-sizing: border-box;
-                        }
-                            #title {
-                                font-size: 18px;
-                                font-weight: bold;
-                                margin-bottom: 10px;
-                            }
-                            #emotion-list {
-                                list-style: none;
-                                padding: 0;
-                                margin-top: 20px;
-                            }
-                            #emotion-list li {
-                                margin-bottom: 5px;
-                            }
-                            .video-container {
-                            position: relative;
-                            width: 100%;
-                            height: 100%; /* Adjust height to fit the box */
-                        }
+    width: 960px; /* Adjust the width as needed */
+    height: 720px; /* Adjust the height as needed */
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative; /* Add position relative to use as a reference for absolute positioning */
+}
+
+#title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#emotion-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#emotion-list li {
+    margin-bottom: 5px;
+}
+
+.video-container {
+    position: absolute; /* Use absolute positioning */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
                         video {
                             width: 100%;
                             height: 100%; /* Adjust height to fit the box */
@@ -524,30 +531,7 @@
                                 <br>
                                 <div class="row">
                                     <div id="container">
-                                        <div>
-                                            <h2 id="title">Emotion Unit</h2>
-                                            <ul id="emotion-list">
-                                                <li>Happy</li>
-                                                <li>Angry</li>
-                                                <li>Disgust</li>
-                                                <li>Fear</li>
-                                                <li>Sad</li>
-                                                <li>Neutral</li>
-                                                <li>Surprise</li>
-                                            </ul>
-                                            <div id="emotionOverlay">
-                                                <div id="truthPercentage"><b>Truth:</b> 70%</div>
-                                                <div id="deceitPercentage"><b>Deceit:</b> 30%</div>
-                                            </div>
-                                            <div id="emotionOverlay">
-                                                <div id="truthPercentage"><b>average bpms:</b> 73%</div>
-                                                <div id="deceitPercentage"><b>Action Unit:</b> Handcovering</div>
-                                                <div id="deceitPercentage"><b>Action Unit:</b> Lip Biting</div>
-                                            </div>
-
-                                            <div id="responseMessage"></div>
-                                            
-                                        </div>
+                                        
                                         <div id="box">
                                             <div class="video-container">
                                                 <video id="videoElement" autoplay></video>
@@ -719,7 +703,64 @@
                                     </div>
                                 </form>
                             </div>
+
                             </section>
+
+
+
+
+
+<!------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+                            
+                            <h2 id="title">Select options</h2>
+                            <select id="recordingOption">
+                                <!--Input  video device (number or path), file, or screen dimensions (x y width height), defaults to 0-->
+                                <option value="30" id="analyzeVideoOption">Analyze Video</option>
+                                 <!--draw face and hand landmarks-->
+                                <option value="60">Record Face and Hand/LandMarks</option>
+                                <!--draw color chart for heartbeats-->
+                                <option value="120">Record With HeartBeat</option>
+                                <!--flip resulting output(selfie view)-->
+                                <option value="120">Record With Selfie View</option>
+                                <!--how many frames for each displayed "tell" to last, defaults to 30-->
+                                <option value="120">Record With frames</option>
+                                <!--timestamped AVI in current Directory-->
+                                <option value="120">Record Detection timestamped</option>
+                                <!--Seconedary video input device (number or path)-->
+                                <option value="120">Record Secondary Video input Device</option>
+                                
+                            </select>
+                            
+                            
+
+
+<!------------------------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <h2 id="title">Select duration</h2>
                             <select id="recordingDuration">
                                 <option value="30">30 seconds</option>
@@ -731,10 +772,7 @@
                                 <option value="mp4">MP4</option>
                                 <option value="webm">WebM</option>
                             </select>
-                            <h2 id="title">Enable Face Labeling:</h2>
-                            <input type="checkbox" id="toggleLabeling">
-                            <progress id="lieDetectionIndicator" value="0" max="100"></progress>
-                            <div id="analysisResults"></div>
+                            
                             <button class="btn" id="exportResults">Export Results</button>
                             <select id="exportFormat">
                                 <option value="pdf">PDF</option>
